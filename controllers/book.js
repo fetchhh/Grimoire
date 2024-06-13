@@ -34,9 +34,6 @@ exports.getBook = (request, response, next) => {
 
 // Post a new book
 exports.postBook = (request, response, next) => {
-  // Delete client-ID
-  delete userId;
-
   // Check if there is an image
   if (!request.file) {
     return response.status(400).json({ message: "Image requise" });
@@ -62,9 +59,6 @@ exports.postBook = (request, response, next) => {
 
 // Modify a book
 exports.updateBook = (request, response, next) => {
-  // Deleting client-ID
-  delete _id;
-
   // Updated book
   const updatedEntry = request.file
     ? {
@@ -72,9 +66,6 @@ exports.updateBook = (request, response, next) => {
         imageUrl: `${request.protocol}://${request.get("host")}/images/${request.file.filename}`,
       }
     : { ...request.body };
-
-  // Remove later
-  console.log(updatedEntry);
 
   // Find the book to update
   Book.findOne({ _id: request.params.id })
@@ -88,7 +79,7 @@ exports.updateBook = (request, response, next) => {
       // Save the updated book
       Book.updateOne(
         { _id: request.params.id },
-        { ...modifiedEntry, _id: request.params.id },
+        { ...updatedEntry, _id: request.params.id },
       )
         .then(() => {
           response.status(200).json({ message: "Modifié" });
