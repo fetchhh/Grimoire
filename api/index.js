@@ -20,8 +20,8 @@ mongoose
   });
 
 // Routes
-const booksRoute = require("./routes/book");
-const authRoute = require("./routes/auth");
+const booksRoute = require("../routes/book");
+const authRoute = require("../routes/auth");
 
 // Headers
 app.use((request, response, next) => {
@@ -46,7 +46,7 @@ app.use("/api/books", booksRoute);
 app.use("/api/auth", authRoute);
 
 // Static path
-app.use("/images", express.static(path.join(__dirname, "images")));
+app.use("../images", express.static(path.join(__dirname, "images")));
 
 // Listen
 app.listen(port, () => {
