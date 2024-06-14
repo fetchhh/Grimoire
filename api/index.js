@@ -41,7 +41,6 @@ app.use((request, response, next) => {
 app.use(express.json());
 
 // Routers
-app.get("/", (req, res) => res.send("Express"));
 app.use("/api/books", booksRoute);
 app.use("/api/auth", authRoute);
 
