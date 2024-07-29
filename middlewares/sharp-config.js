@@ -11,6 +11,7 @@ const compress = (request, response, next) => {
     );
 
     // Compress and convert file
+    sharp.cache(false);
     sharp(filePath)
       .resize({ width: 600 })
       .webp({ quality: 80 })
