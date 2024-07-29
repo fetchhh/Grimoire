@@ -20,7 +20,7 @@ const compress = (request, response, next) => {
           return response.status(500).json({ error });
         }
         request.file.filename = `compressed-${path.parse(request.file.originalname).name}.webp`;
-        // Attempt to delete previous file
+        // Delete previous file
         fs.unlink(filePath, (err) => {
           if (err) {
             console.log(err);
