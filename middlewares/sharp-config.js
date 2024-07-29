@@ -7,7 +7,7 @@ const compress = (request, response, next) => {
     const filePath = request.file.path;
     const ouputPath = path.join(
       "images",
-      `compressed-${path.parse(request.file.originalname).name}.webp`,
+      `compressed-${path.parse(request.file.filename).name}.webp`,
     );
 
     // Compress and convert file
@@ -19,7 +19,7 @@ const compress = (request, response, next) => {
         if (err) {
           return response.status(500).json({ error });
         }
-        request.file.filename = `compressed-${path.parse(request.file.originalname).name}.webp`;
+        request.file.filename = `compressed-${path.parse(request.file.filename).name}.webp`;
         // Delete previous file
         fs.unlink(filePath, (err) => {
           if (err) {
