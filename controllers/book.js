@@ -53,6 +53,7 @@ exports.postBook = (request, response, next) => {
       response.status(201).json({ message: "Crée" });
     })
     .catch((error) => {
+      console.log(error);
       response.status(500).json({ error });
     });
 };
@@ -104,7 +105,7 @@ exports.addRating = (request, response, next) => {
 
   // Verifiy that the grade is between 0 & 5
   if (userRating.grade > 5 || userRating.grade < 0) {
-    return response.status(code).json({ message: "Note invalide" });
+    return response.status(400).json({ message: "Note invalide" });
   }
 
   // Find the book to rate
@@ -136,7 +137,7 @@ exports.addRating = (request, response, next) => {
         });
     })
     .catch((error) => {
-      response.status(500).json({ error });
+      response.status(404).json({ error });
     });
 };
 
@@ -159,6 +160,6 @@ exports.deleteBook = (request, response, next) => {
         });
     })
     .catch((error) => {
-      response.status(500).json({ error });
+      response.status(404).json({ error });
     });
 };

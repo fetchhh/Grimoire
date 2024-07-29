@@ -1,4 +1,6 @@
 # Ignore node_modules folder
 node_modules/
+# Images
+images/*
 # Ignore environment variables
 .env
