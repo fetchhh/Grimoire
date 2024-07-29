@@ -5,7 +5,6 @@ const path = require("path");
 const compress = (request, response, next) => {
   if (request.file) {
     const filePath = request.file.path;
-    console.log(request.file);
     const ouputPath = path.join(
       "images",
       `compressed-${path.parse(request.file.originalname).name}.webp`,
