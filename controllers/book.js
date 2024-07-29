@@ -1,5 +1,7 @@
 // Require
 const Book = require("../models/Book");
+const path = require("path");
+const fs = require("fs");
 
 // Get all the books available
 exports.getBooks = (request, response, next) => {
@@ -77,6 +79,16 @@ exports.updateBook = (request, response, next) => {
         return response.status(403).json({ message: "Non-autorisé" });
       }
 
+      if (request.file) {
+        // Delete old image if modified
+        const deletePath = path.join("images", path.basename(entry.imageUrl));
+        fs.unlink(deletePath, (err) => {
+          if (err) {
+            console.log(err);
+          }
+        });
+      }
+
       // Save the updated book
       Book.updateOne(
         { _id: request.params.id },
@@ -150,6 +162,13 @@ exports.deleteBook = (request, response, next) => {
       if (entry.userId !== request.auth.userId) {
         return response.status(403).json({ message: "Non-autorisé" });
       }
+      // Delete image
+      const deletePath = path.join("images", path.basename(entry.imageUrl));
+      fs.unlink(deletePath, (err) => {
+        if (err) {
+          console.log(err);
+        }
+      });
       // Delete the book
       Book.deleteOne({ _id: request.params.id })
         .then(() => {
