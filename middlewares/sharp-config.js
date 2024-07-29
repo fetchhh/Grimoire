@@ -5,26 +5,32 @@ const path = require("path");
 const compress = (request, response, next) => {
   if (request.file) {
     const filePath = request.file.path;
+    console.log(request.file);
     const ouputPath = path.join(
       "images",
-      `compressed-${request.file.filename}`,
+      `compressed-${path.parse(request.file.originalname).name}.webp`,
     );
 
-    // Compress file
+    // Compress and convert file
     sharp(filePath)
-      .resize({ width: 800 })
-      .jpeg({ quality: 80 })
+      .resize({ width: 600 })
+      .webp({ quality: 80 })
       .toFile(ouputPath, (err, info) => {
         if (err) {
-          return next(err);
+          return response.status(500).json({ error });
         }
-
-        request.file.path = ouputPath;
+        request.file.filename = `compressed-${path.parse(request.file.originalname).name}.webp`;
         // Attempt to delete previous file
-        fs.unlink(filePath);
+        fs.unlink(filePath, (err) => {
+          if (err) {
+            console.log(err);
+          }
+        });
+        next();
       });
+  } else {
+    next();
   }
-  next();
 };
 
 // Exports

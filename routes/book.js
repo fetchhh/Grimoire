@@ -1,7 +1,7 @@
 // Require
 const express = require("express");
-const multer = require("../middlewares/multer-config");
 const auth = require("../middlewares/auth-config");
+const multer = require("../middlewares/multer-config");
 const compress = require("../middlewares/sharp-config");
 
 const bookController = require("../controllers/book");
